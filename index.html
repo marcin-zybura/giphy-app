@@ -3,12 +3,39 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <title></title>
   </head>
 
   <body>
+    <div class="container">
+      <h1>Giphy app</h1>
 
+      <form>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Find your .gif</label>
+          <input type="text" class="form-control" id="gifInput" aria-describedby="gifInput" placeholder="Search...">
+          <small id="gifHelp" class="form-text text-muted">Type to search</small>
+        </div>
+      </form>
+    </div>
+    <div class="container gifs-container">
+      <img class="gif-image" src="" alt="">
+      <div class="row">
+        <div class="col-sm">
+          One of three columns
+        </div>
+        <div class="col-sm">
+          One of three columns
+        </div>
+        <div class="col-sm">
+          One of three columns
+        </div>
+      </div>
+    </div>
     <script src="main.js"></script>
   </body>
 </html>
