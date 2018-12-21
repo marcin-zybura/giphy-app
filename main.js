@@ -1,5 +1,6 @@
 const apiKey = "bK1AyekRNALJHvERutwtPCrOUqwHCGmW";
 const apiUrl = "http://api.giphy.com/v1/gifs/search";
+const apiLimit = 5;
 const searchValue = "";
 
 // const row = `<div class="row"></div>`;
@@ -14,15 +15,15 @@ const searchValue = "";
 //   });
 
 const callApi = () => {
-  fetch(`${apiUrl}?q=${getInputValue()}&api_key=${apiKey}&limit=3`)
+  fetch(`${apiUrl}?q=${getInputValue()}&api_key=${apiKey}&limit=${apiLimit}`)
   .then((response) => {
     return response.json();
   })
   .then((myJson) => {
-    console.log(JSON.stringify(myJson));
     insertGif(myJson);
     return myJson;
-  });
+  })
+  .catch(err => console.log(err));
 }
 
 const getInputValue = () => {
@@ -88,21 +89,25 @@ const insertGif = (myJson) => {
       const gifImage = document.createElement("img");
       gifImage.setAttribute("class", "gif-image");
       console.log(cell);
+      cell.append(gifImage);
     }
   }
 
   [...gifImage].forEach((value, index) => {
-    gifImage[index].src = `${myJson.data[index].images.downsized_medium.url}`;
-    console.log(document.querySelectorAll("col-sm"));
-    console.log(value);
-    console.log(gifImage);
-    console.log([...gifImage]);
+    gifImage[index].src = `${myJson.data[index].images.original.url}`;
+    gifImage[index].alt = `${myJson.data[index].title}`;
+    console.log(myJson);
+    // console.log(document.querySelectorAll("col-sm"));
+    // console.log(value);
+    // console.log(gifImage);
+    // console.log([...gifImage]);
   });
   
 
   myJson.data.forEach((el) => {
-    console.log(el.images.downsized_medium.url);
-    console.log(myJson.data.length);
+    // console.log(el.images.downsized_medium.url);
+    // console.log(myJson.data.length);
+    // console.log(myJson.data);
   });
 }
 
