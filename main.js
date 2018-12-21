@@ -3,8 +3,10 @@ const apiUrl = "http://api.giphy.com/v1/gifs/search";
 const apiLimit = 15;
 const searchValue = "";
 const gifInput = document.getElementById("gifInput");
+const gifsContainer = document.querySelector(".gifs-container");
 
 const callApi = () => {
+  clearGifs();
   fetch(`${apiUrl}?q=${getInputValue()}&api_key=${apiKey}&limit=${apiLimit}`)
   .then((response) => {
     return response.json();
@@ -24,8 +26,8 @@ const clearGifs = () => {
   gifsContainer.innerHTML = "";
 }
 
-const addRow = (rowsNeeded, columnsQuantity) => {
-  const gifsContainer = document.querySelector(".gifs-container");
+const addRows = (rowsNeeded, columnsQuantity) => {
+  // const gifsContainer = document.querySelector(".gifs-container");
   for (let i = 0; i < rowsNeeded; i++) {
     const row = document.createElement("div");
     row.setAttribute("class", "row");
@@ -73,7 +75,7 @@ const insertGif = (myJson) => {
   const columnsQuantity = 4;
   const rowsNeeded = Math.ceil(myJson.data.length / columnsQuantity);
 
-  addRow(rowsNeeded, columnsQuantity);
+  addRows(rowsNeeded, columnsQuantity);
 
   const gifImage = document.getElementsByClassName("gif-image");
 
