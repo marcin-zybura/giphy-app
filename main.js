@@ -3,7 +3,6 @@ const apiUrl = "http://api.giphy.com/v1/gifs/search";
 const apiLimit = 15;
 const searchValue = "";
 const gifInput = document.getElementById("gifInput");
-const gifsContainer = document.querySelector(".gifs-container");
 
 const callApi = () => {
   fetch(`${apiUrl}?q=${getInputValue()}&api_key=${apiKey}&limit=${apiLimit}`)
@@ -26,6 +25,7 @@ const clearGifs = () => {
 }
 
 const addRow = (rowsNeeded, columnsQuantity) => {
+  const gifsContainer = document.querySelector(".gifs-container");
   for (let i = 0; i < rowsNeeded; i++) {
     const row = document.createElement("div");
     row.setAttribute("class", "row");
@@ -73,22 +73,9 @@ const insertGif = (myJson) => {
   const columnsQuantity = 4;
   const rowsNeeded = Math.ceil(myJson.data.length / columnsQuantity);
 
-  // addRow(this.rowsNeeded, this.columnsQuantity);
+  addRow(rowsNeeded, columnsQuantity);
 
-  for (let i = 0; i < rowsNeeded; i++) {
-    const row = document.createElement("div");
-    row.setAttribute("class", "row");
-    gifsContainer.append(row);
-
-    for (let i = 0; i < columnsQuantity; i++) {
-      const cell = document.createElement("div");
-      cell.setAttribute("class", "col-sm");
-      row.append(cell);
-      const gifImage = document.createElement("img");
-      gifImage.setAttribute("class", "gif-image");
-      cell.append(gifImage);
-    }
-  }
+  const gifImage = document.getElementsByClassName("gif-image");
 
   [...gifImage].forEach((value, index) => {
     gifImage[index].src = `${myJson.data[index].images.original.url}`;
@@ -97,7 +84,7 @@ const insertGif = (myJson) => {
 }
 
 // gifInput.addEventListener("keydown", keyUpApiCall);
-gifInput.addEventListener("keyup", keyUpApiCall());
+gifInput.addEventListener("keyup", keyUpApiCall);
 // gifInput.addEventListener("keyup", (e) => {
 //   if (e.which == 8) {
 
