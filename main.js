@@ -1,18 +1,9 @@
 const apiKey = "bK1AyekRNALJHvERutwtPCrOUqwHCGmW";
 const apiUrl = "http://api.giphy.com/v1/gifs/search";
-const apiLimit = 5;
+const apiLimit = 15;
 const searchValue = "";
-
-// const row = `<div class="row"></div>`;
-// const col = `<div class="col-sm"></div>`;
-
-// fetch(`${apiUrl}?q=ryan+gosling&api_key=${apiKey}&limit=1`)
-//   .then((response) => {
-//     return response.json();
-//   })
-//   .then((myJson) => {
-//     console.log(JSON.stringify(myJson));
-//   });
+const gifInput = document.getElementById("gifInput");
+const gifsContainer = document.querySelector(".gifs-container");
 
 const callApi = () => {
   fetch(`${apiUrl}?q=${getInputValue()}&api_key=${apiKey}&limit=${apiLimit}`)
@@ -28,6 +19,27 @@ const callApi = () => {
 
 const getInputValue = () => {
   return gifInput.value;
+}
+
+const clearGifs = () => {
+  gifsContainer.innerHTML = "";
+}
+
+const addRow = (rowsNeeded, columnsQuantity) => {
+  for (let i = 0; i < rowsNeeded; i++) {
+    const row = document.createElement("div");
+    row.setAttribute("class", "row");
+    gifsContainer.append(row);
+
+    for (let i = 0; i < columnsQuantity; i++) {
+      const cell = document.createElement("div");
+      cell.setAttribute("class", "col-sm");
+      row.append(cell);
+      const gifImage = document.createElement("img");
+      gifImage.setAttribute("class", "gif-image");
+      cell.append(gifImage);
+    }
+  }
 }
 
 const debounce = (func, wait, immediate) => {
@@ -52,43 +64,28 @@ const debounce = (func, wait, immediate) => {
   };
 };
 
-const keyUpApiCall = debounce(function() {
-  const gifInput = document.getElementById("gifInput");
+const keyUpApiCall = debounce(() => {
+  // clearGifs();
   callApi();
 }, 300);
 
 const insertGif = (myJson) => {
-  const gifImage = document.getElementsByClassName("gif-image");
-  const columnsQuantity = 3;
-  /**Zrobić tak, żeby przy osiągnięciu length większe niż wielokrotność 3 wstawiać nowy wiersz */
-  // for (let el of myJson.data) {
-  //   if (myJson.data.length ) {
-
-  //   }
-  // }
+  const columnsQuantity = 4;
   const rowsNeeded = Math.ceil(myJson.data.length / columnsQuantity);
-  const gifsContainer = document.querySelector(".gifs-container");
-  // for (let el of myJson.data) {
 
-  // }
-
-  // for (let gif of gifImage) {
-  //   gifImage.src = `${myJson.data[0].images.downsized_medium.url}`;
-  // }
+  // addRow(this.rowsNeeded, this.columnsQuantity);
 
   for (let i = 0; i < rowsNeeded; i++) {
     const row = document.createElement("div");
     row.setAttribute("class", "row");
-    console.log(row);
     gifsContainer.append(row);
+
     for (let i = 0; i < columnsQuantity; i++) {
       const cell = document.createElement("div");
       cell.setAttribute("class", "col-sm");
-      console.log(cell);
       row.append(cell);
       const gifImage = document.createElement("img");
       gifImage.setAttribute("class", "gif-image");
-      console.log(cell);
       cell.append(gifImage);
     }
   }
@@ -96,19 +93,13 @@ const insertGif = (myJson) => {
   [...gifImage].forEach((value, index) => {
     gifImage[index].src = `${myJson.data[index].images.original.url}`;
     gifImage[index].alt = `${myJson.data[index].title}`;
-    console.log(myJson);
-    // console.log(document.querySelectorAll("col-sm"));
-    // console.log(value);
-    // console.log(gifImage);
-    // console.log([...gifImage]);
-  });
-  
-
-  myJson.data.forEach((el) => {
-    // console.log(el.images.downsized_medium.url);
-    // console.log(myJson.data.length);
-    // console.log(myJson.data);
   });
 }
 
-gifInput.addEventListener("keyup", keyUpApiCall);
+// gifInput.addEventListener("keydown", keyUpApiCall);
+gifInput.addEventListener("keyup", keyUpApiCall());
+// gifInput.addEventListener("keyup", (e) => {
+//   if (e.which == 8) {
+
+//   }
+// });
