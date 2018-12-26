@@ -1,14 +1,19 @@
 const apiKey = "bK1AyekRNALJHvERutwtPCrOUqwHCGmW";
 const apiUrl = "http://api.giphy.com/v1/gifs/search";
-const apiLimit = 15;
+const apiLimit = 16;
 const searchValue = "";
 const gifInput = document.getElementById("gifInput");
 const gifsContainer = document.querySelector(".gifs-container");
+const giphyForm = document.getElementById("giphy-form");
 
 const callApi = () => {
   clearGifs();
+  const loader = document.createElement("div");
+  loader.setAttribute("class", "loader");
+  gifsContainer.appendChild(loader);
   fetch(`${apiUrl}?q=${getInputValue()}&api_key=${apiKey}&limit=${apiLimit}`)
   .then((response) => {
+    gifsContainer.removeChild(loader);
     return response.json();
   })
   .then((myJson) => {
@@ -31,15 +36,15 @@ const addRows = (rowsNeeded, columnsQuantity) => {
   for (let i = 0; i < rowsNeeded; i++) {
     const row = document.createElement("div");
     row.setAttribute("class", "row");
-    gifsContainer.append(row);
+    gifsContainer.appendChild(row);
 
     for (let i = 0; i < columnsQuantity; i++) {
       const cell = document.createElement("div");
-      cell.setAttribute("class", "col-sm");
-      row.append(cell);
+      cell.setAttribute("class", "col-sm column__cell");
+      row.appendChild(cell);
       const gifImage = document.createElement("img");
       gifImage.setAttribute("class", "gif-image");
-      cell.append(gifImage);
+      cell.appendChild(gifImage);
     }
   }
 }
@@ -68,8 +73,9 @@ const debounce = (func, wait, immediate) => {
 
 const keyUpApiCall = debounce(() => {
   // clearGifs();
+  console.log(document.getElementById("loader"));
   callApi();
-}, 300);
+}, 200);
 
 const insertGif = (myJson) => {
   const columnsQuantity = 4;
@@ -85,10 +91,10 @@ const insertGif = (myJson) => {
   });
 }
 
-// gifInput.addEventListener("keydown", keyUpApiCall);
 gifInput.addEventListener("keyup", keyUpApiCall);
-// gifInput.addEventListener("keyup", (e) => {
-//   if (e.which == 8) {
-
-//   }
-// });
+giphyForm.addEventListener("keydown", (e) => {
+  if (e.keyCode == 13) {
+    e.preventDefault();
+    return false;
+  }
+});
