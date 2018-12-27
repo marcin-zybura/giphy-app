@@ -1,13 +1,13 @@
 const apiKey = "bK1AyekRNALJHvERutwtPCrOUqwHCGmW";
 const apiUrl = "http://api.giphy.com/v1/gifs/search";
-const apiLimit = 16;
+let apiLimit = 16;
 const searchValue = "";
 const gifInput = document.getElementById("gifInput");
 const gifsContainer = document.querySelector(".gifs-container");
 const giphyForm = document.getElementById("giphy-form");
 
 const callApi = () => {
-  clearGifs();
+  // clearGifs();
   const loader = document.createElement("div");
   loader.setAttribute("class", "loader");
   gifsContainer.appendChild(loader);
@@ -73,7 +73,7 @@ const debounce = (func, wait, immediate) => {
 
 const keyUpApiCall = debounce(() => {
   // clearGifs();
-  console.log(document.getElementById("loader"));
+  // console.log(document.getElementById("loader"));
   callApi();
 }, 200);
 
@@ -81,7 +81,13 @@ const insertGif = (myJson) => {
   const columnsQuantity = 4;
   const rowsNeeded = Math.ceil(myJson.data.length / columnsQuantity);
 
-  addRows(rowsNeeded, columnsQuantity);
+  // addRows(rowsNeeded, columnsQuantity);
+  console.log(myJson);
+  for (let i = 0; i < myJson.data.length; i++) {
+    const gifImage = document.createElement("img");
+    gifImage.setAttribute("class", "gif-image");
+    gifsContainer.appendChild(gifImage);
+  }
 
   const gifImage = document.getElementsByClassName("gif-image");
 
@@ -96,5 +102,12 @@ giphyForm.addEventListener("keydown", (e) => {
   if (e.keyCode == 13) {
     e.preventDefault();
     return false;
+  }
+});
+
+window.addEventListener("scroll", () => {
+  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+    apiLimit = apiLimit + 1;
+    callApi();
   }
 });
