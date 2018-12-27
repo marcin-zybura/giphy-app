@@ -82,12 +82,29 @@ const insertGif = (myJson) => {
   const rowsNeeded = Math.ceil(myJson.data.length / columnsQuantity);
 
   // addRows(rowsNeeded, columnsQuantity);
-  console.log(myJson);
+  // console.log(myJson);
   for (let i = 0; i < myJson.data.length; i++) {
     const gifImage = document.createElement("img");
     gifImage.setAttribute("class", "gif-image");
     gifsContainer.appendChild(gifImage);
   }
+
+
+
+  // for (let i = 0; i < rowsNeeded; i++) {
+  //   const row = document.createElement("div");
+  //   row.setAttribute("class", "row");
+  //   gifsContainer.appendChild(row);
+
+  //   for (let i = 0; i < columnsQuantity; i++) {
+  //     const cell = document.createElement("div");
+  //     cell.setAttribute("class", "col-sm column__cell");
+  //     row.appendChild(cell);
+  //     const gifImage = document.createElement("img");
+  //     gifImage.setAttribute("class", "gif-image");
+  //     cell.appendChild(gifImage);
+  //   }
+  // }
 
   const gifImage = document.getElementsByClassName("gif-image");
 
@@ -107,7 +124,11 @@ giphyForm.addEventListener("keydown", (e) => {
 
 window.addEventListener("scroll", () => {
   if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-    apiLimit = apiLimit + 1;
+    apiLimit = apiLimit + 4;
+    while (apiLimit <= 100) {
+
+    }
+    console.log(apiLimit);
     callApi();
   }
 });

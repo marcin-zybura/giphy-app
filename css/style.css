@@ -1,7 +1,12 @@
+.gifs-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .gif-image {
   display: block;
-  height: 100%;
-  width: 100%;
+  max-height: 150px;
+  width: 25%;
 }
 
 .column__cell {
