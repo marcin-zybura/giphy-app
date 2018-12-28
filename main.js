@@ -1,6 +1,6 @@
 const apiKey = "bK1AyekRNALJHvERutwtPCrOUqwHCGmW";
 const apiUrl = "http://api.giphy.com/v1/gifs/search";
-let apiLimit = 16;
+let apiLimit = 24;
 const searchValue = "";
 const gifInput = document.getElementById("gifInput");
 const gifsContainer = document.querySelector(".gifs-container");
@@ -82,7 +82,6 @@ const insertGif = (myJson) => {
   const rowsNeeded = Math.ceil(myJson.data.length / columnsQuantity);
 
   // addRows(rowsNeeded, columnsQuantity);
-  // console.log(myJson);
   for (let i = 0; i < myJson.data.length; i++) {
     const gifImage = document.createElement("img");
     gifImage.setAttribute("class", "gif-image");
@@ -109,7 +108,7 @@ const insertGif = (myJson) => {
   const gifImage = document.getElementsByClassName("gif-image");
 
   [...gifImage].forEach((value, index) => {
-    gifImage[index].src = `${myJson.data[index].images.original.url}`;
+    gifImage[index].src = `${myJson.data[index].images.fixed_height_downsampled.webp}`;
     gifImage[index].alt = `${myJson.data[index].title}`;
   });
 }
@@ -124,11 +123,7 @@ giphyForm.addEventListener("keydown", (e) => {
 
 window.addEventListener("scroll", () => {
   if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-    apiLimit = apiLimit + 4;
-    while (apiLimit <= 100) {
-
-    }
-    console.log(apiLimit);
+    apiLimit += 4;
     callApi();
   }
 });
