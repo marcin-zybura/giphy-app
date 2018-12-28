@@ -8,19 +8,37 @@ const giphyForm = document.getElementById("giphy-form");
 
 const callApi = () => {
   // clearGifs();
-  const loader = document.createElement("div");
-  loader.setAttribute("class", "loader");
-  gifsContainer.appendChild(loader);
-  fetch(`${apiUrl}?q=${getInputValue()}&api_key=${apiKey}&limit=${apiLimit}`)
-  .then((response) => {
-    gifsContainer.removeChild(loader);
-    return response.json();
-  })
-  .then((myJson) => {
-    insertGif(myJson);
-    return myJson;
-  })
-  .catch(err => console.log(err));
+  const loader = document.getElementById("loader");
+  if (loader.classList.contains("hidden")) {
+    loader.classList.remove("hidden");
+  }
+  // loader.setAttribute("class", "loader");
+  // gifsContainer.appendChild(loader);
+  setTimeout(() => {
+    fetch(`${apiUrl}?q=${getInputValue()}&api_key=${apiKey}&limit=${apiLimit}`)
+    .then((response) => {
+      // gifsContainer.removeChild(loader);
+      return response.json();
+    })
+    .then((myJson) => {
+      loader.classList.add("hidden");
+      insertGif(myJson);
+      return myJson;
+    })
+    .catch(err => console.log(err));
+  }, 1000);
+  
+  // fetch(`${apiUrl}?q=${getInputValue()}&api_key=${apiKey}&limit=${apiLimit}`)
+  // .then((response) => {
+  //   // gifsContainer.removeChild(loader);
+  //   return response.json();
+  // })
+  // .then((myJson) => {
+  //   loader.classList.add("hidden");
+  //   insertGif(myJson);
+  //   return myJson;
+  // })
+  // .catch(err => console.log(err));
 }
 
 const getInputValue = () => {
@@ -87,23 +105,6 @@ const insertGif = (myJson) => {
     gifImage.setAttribute("class", "gif-image");
     gifsContainer.appendChild(gifImage);
   }
-
-
-
-  // for (let i = 0; i < rowsNeeded; i++) {
-  //   const row = document.createElement("div");
-  //   row.setAttribute("class", "row");
-  //   gifsContainer.appendChild(row);
-
-  //   for (let i = 0; i < columnsQuantity; i++) {
-  //     const cell = document.createElement("div");
-  //     cell.setAttribute("class", "col-sm column__cell");
-  //     row.appendChild(cell);
-  //     const gifImage = document.createElement("img");
-  //     gifImage.setAttribute("class", "gif-image");
-  //     cell.appendChild(gifImage);
-  //   }
-  // }
 
   const gifImage = document.getElementsByClassName("gif-image");
 
