@@ -12,7 +12,9 @@ const browserSync = require('browser-sync').create();
 gulp.task('sass', () => {
   gulp.src(input)
   .pipe(sass(sassOptions).on('error', sass.logError))
-  .pipe(autoprefixer())
+  .pipe(autoprefixer({
+    browsers: ['> 1%']
+  }))
   .pipe(gulp.dest(output))
   .pipe(browserSync.reload({
     stream: true

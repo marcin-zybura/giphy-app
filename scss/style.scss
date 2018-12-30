@@ -1,0 +1,41 @@
+.gifs-container {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.gif-image {
+  display: block;
+  /* height: 100%; */
+  width: 25%;
+}
+
+.column__cell {
+  height: 200px;
+}
+
+.row {
+  margin: 15px 0;
+}
+
+.loader {
+  animation: spin 2s linear infinite;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  height: 120px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.hidden {
+  display: none;
+}
