@@ -26,19 +26,7 @@ const callApi = () => {
       return myJson;
     })
     .catch(err => console.log(err));
-  }, 1000);
-  
-  // fetch(`${apiUrl}?q=${getInputValue()}&api_key=${apiKey}&limit=${apiLimit}`)
-  // .then((response) => {
-  //   // gifsContainer.removeChild(loader);
-  //   return response.json();
-  // })
-  // .then((myJson) => {
-  //   loader.classList.add("hidden");
-  //   insertGif(myJson);
-  //   return myJson;
-  // })
-  // .catch(err => console.log(err));
+  }, 300);
 }
 
 const getInputValue = () => {
@@ -49,23 +37,30 @@ const clearGifs = () => {
   gifsContainer.innerHTML = "";
 }
 
-const addRows = (rowsNeeded, columnsQuantity) => {
-  // const gifsContainer = document.querySelector(".gifs-container");
-  for (let i = 0; i < rowsNeeded; i++) {
-    const row = document.createElement("div");
-    row.setAttribute("class", "row");
-    gifsContainer.appendChild(row);
+// const addCell = (columnsQuantity) => {
+//   for (let i = 0; i < columnsQuantity; i++) {
+//     const cell = document.createElement("div");
+//     cell.setAttribute("class", "col-sm column__cell");
+//     row.appendChild(cell);
+//     const gifImage = document.createElement("img");
+//     gifImage.setAttribute("class", "gif-image");
+//     cell.appendChild(gifImage);
+//   }
+// }
 
-    for (let i = 0; i < columnsQuantity; i++) {
-      const cell = document.createElement("div");
-      cell.setAttribute("class", "col-sm column__cell");
-      row.appendChild(cell);
-      const gifImage = document.createElement("img");
-      gifImage.setAttribute("class", "gif-image");
-      cell.appendChild(gifImage);
-    }
-  }
-}
+// const addRow = (rowsNeeded) => {
+//   for (let i = 0; i < rowsNeeded; i++) {
+//     const row = document.createElement("div");
+//     row.setAttribute("class", "row");
+//     gifsContainer.appendChild(row);
+
+//     addCell(columnsQuantity);
+//   }
+// }
+
+// const addRowsAndCells = (rowsNeeded, columnsQuantity) => {
+//   addRow(rowsNeeded);
+// }
 
 const debounce = (func, wait, immediate) => {
   var timeout;
@@ -90,8 +85,6 @@ const debounce = (func, wait, immediate) => {
 };
 
 const keyUpApiCall = debounce(() => {
-  // clearGifs();
-  // console.log(document.getElementById("loader"));
   callApi();
 }, 200);
 
@@ -99,7 +92,7 @@ const insertGif = (myJson) => {
   const columnsQuantity = 4;
   const rowsNeeded = Math.ceil(myJson.data.length / columnsQuantity);
 
-  // addRows(rowsNeeded, columnsQuantity);
+  // addRowsAndCells(rowsNeeded, columnsQuantity);
   for (let i = 0; i < myJson.data.length; i++) {
     const gifImage = document.createElement("img");
     gifImage.setAttribute("class", "gif-image");
@@ -114,7 +107,10 @@ const insertGif = (myJson) => {
   });
 }
 
+// Call API on keyup
 gifInput.addEventListener("keyup", keyUpApiCall);
+
+// Prevent form submit on ENTER
 giphyForm.addEventListener("keydown", (e) => {
   if (e.keyCode == 13) {
     e.preventDefault();
@@ -122,9 +118,10 @@ giphyForm.addEventListener("keydown", (e) => {
   }
 });
 
+  // Load more gifs when scroll to bottom
 window.addEventListener("scroll", () => {
   if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-    apiLimit += 4;
+    apiLimit += 8;
     callApi();
   }
 });
