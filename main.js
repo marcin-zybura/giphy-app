@@ -31,10 +31,6 @@ const getInputValue = () => {
   return gifInput.value;
 }
 
-const clearGifs = () => {
-  gifsContainer.innerHTML = "";
-}
-
 const removeGifImagesOnEmptyInput = () => {
   if (getInputValue() === '') {
     document.getElementsByClassName("gif-image").forEach((el) => {
@@ -65,7 +61,7 @@ const debounce = (func, wait, immediate) => {
   };
 };
 
-// Calls API after 200ms keyup
+// Calls API after timeout on keyup
 const keyUpApiCall = debounce(() => {
   callApi(200);
 }, 100);
@@ -85,7 +81,7 @@ const insertGif = (myJson) => {
   });
 }
 
-// Call API on keyup
+// Call API on keyup (event listener)
 gifInput.addEventListener("keyup", () => {
   keyUpApiCall();
   if (getInputValue() === '') {

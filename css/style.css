@@ -6,8 +6,8 @@
 
 .gif-image {
   display: block;
-  /* height: 100%; */
-  width: 25%;
+  margin: 5px;
+  width: 32%;
   z-index: -1;
 }
 
@@ -35,6 +35,10 @@
   width: 120px;
 }
 
+.hidden {
+  display: none;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -44,6 +48,14 @@
   }
 }
 
-.hidden {
-  display: none;
+@media (max-width: 1000px) {
+  .gif-image {
+    width: 45%;
+  }
+}
+
+@media (max-width: 500px) {
+  .gif-image {
+    width: 100%;
+  }
 }

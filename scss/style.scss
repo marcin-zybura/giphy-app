@@ -2,22 +2,12 @@
   display: flex;
   flex-wrap: wrap;
   position: relative;
-
-  // &:before {
-  //   background-color: rgba(33, 33, 33, 0.5);
-  //   bottom: 0;
-  //   content: '';
-  //   left: 0;
-  //   position: absolute;
-  //   right: 0;
-  //   top: 0;
-  // }
 }
 
 .gif-image {
   display: block;
-  /* height: 100%; */
-  width: 25%;
+  margin: 5px;
+  width: 32%;
   z-index: -1;
 }
 
@@ -45,11 +35,23 @@
   width: 120px;
 }
 
+.hidden {
+  display: none;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
-.hidden {
-  display: none;
+@media (max-width: 1000px) {
+  .gif-image {
+    width: 45%;
+  }
+}
+
+@media (max-width: 500px) {
+  .gif-image {
+    width: 100%;
+  }
 }
