@@ -33,9 +33,9 @@ const getInputValue = () => {
 
 const removeGifImagesOnEmptyInput = () => {
   if (getInputValue() === '') {
-    document.getElementsByClassName("gif-image").forEach((el) => {
-      el.remove();
-    });
+    while (document.getElementsByClassName("gif-image").length > 0) {
+      document.getElementsByClassName("gif-image")[0].parentNode.removeChild(document.getElementsByClassName("gif-image")[0]);
+    }
   }
 }
 
@@ -84,11 +84,7 @@ const insertGif = (myJson) => {
 // Call API on keyup (event listener)
 gifInput.addEventListener("keyup", () => {
   keyUpApiCall();
-  if (getInputValue() === '') {
-    while (document.getElementsByClassName("gif-image").length > 0) {
-      document.getElementsByClassName("gif-image")[0].parentNode.removeChild(document.getElementsByClassName("gif-image")[0]);
-    }
-  }
+  removeGifImagesOnEmptyInput();
 });
 
 // Prevent form submit on ENTER
