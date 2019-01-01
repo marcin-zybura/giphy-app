@@ -2,12 +2,23 @@
   display: flex;
   flex-wrap: wrap;
   position: relative;
+
+  // &:before {
+  //   background-color: rgba(33, 33, 33, 0.5);
+  //   bottom: 0;
+  //   content: '';
+  //   left: 0;
+  //   position: absolute;
+  //   right: 0;
+  //   top: 0;
+  // }
 }
 
 .gif-image {
   display: block;
   /* height: 100%; */
   width: 25%;
+  z-index: -1;
 }
 
 .column__cell {
@@ -18,16 +29,19 @@
   margin: 15px 0;
 }
 
+.loader-container {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+}
+
 .loader {
   animation: spin 2s linear infinite;
   border: 16px solid #f3f3f3;
   border-radius: 50%;
   border-top: 16px solid #3498db;
   height: 120px;
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translateX(-50%);
   width: 120px;
 }
 

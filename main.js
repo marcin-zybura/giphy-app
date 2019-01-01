@@ -3,13 +3,14 @@ const apiUrl = "http://api.giphy.com/v1/gifs/search";
 let apiLimit = 24;
 const searchValue = "";
 const gifInput = document.getElementById("gifInput");
-const gifsContainer = document.querySelector(".gifs-container");
+const gifsContainer = document.getElementById("gifs-container");
 const giphyForm = document.getElementById("giphy-form");
 
-const callApi = () => {
+const callApi = (apiTimeout = 100) => {
   const loader = document.getElementById("loader");
   if (loader.classList.contains("hidden")) {
     loader.classList.remove("hidden");
+    gifsContainer.style.backgroundColor = "rgba(33, 33, 33, 0.5)";
   }
   setTimeout(() => {
     fetch(`${apiUrl}?q=${getInputValue()}&api_key=${apiKey}&limit=${apiLimit}`)
@@ -18,11 +19,12 @@ const callApi = () => {
     })
     .then((myJson) => {
       loader.classList.add("hidden");
+      gifsContainer.style.backgroundColor = "transparent";
       insertGif(myJson);
       return myJson;
     })
     .catch(err => console.log(err));
-  }, 300);
+  }, apiTimeout);
 }
 
 const getInputValue = () => {
@@ -31,6 +33,14 @@ const getInputValue = () => {
 
 const clearGifs = () => {
   gifsContainer.innerHTML = "";
+}
+
+const removeGifImagesOnEmptyInput = () => {
+  if (getInputValue() === '') {
+    document.getElementsByClassName("gif-image").forEach((el) => {
+      el.remove();
+    });
+  }
 }
 
 const debounce = (func, wait, immediate) => {
@@ -55,9 +65,10 @@ const debounce = (func, wait, immediate) => {
   };
 };
 
+// Calls API after 200ms keyup
 const keyUpApiCall = debounce(() => {
-  callApi();
-}, 200);
+  callApi(200);
+}, 100);
 
 const insertGif = (myJson) => {
   for (let i = 0; i < myJson.data.length; i++) {
@@ -75,7 +86,14 @@ const insertGif = (myJson) => {
 }
 
 // Call API on keyup
-gifInput.addEventListener("keyup", keyUpApiCall);
+gifInput.addEventListener("keyup", () => {
+  keyUpApiCall();
+  if (getInputValue() === '') {
+    while (document.getElementsByClassName("gif-image").length > 0) {
+      document.getElementsByClassName("gif-image")[0].parentNode.removeChild(document.getElementsByClassName("gif-image")[0]);
+    }
+  }
+});
 
 // Prevent form submit on ENTER
 giphyForm.addEventListener("keydown", (e) => {
@@ -89,6 +107,6 @@ giphyForm.addEventListener("keydown", (e) => {
 window.addEventListener("scroll", () => {
   if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
     apiLimit += 8;
-    callApi();
+    callApi(10);
   }
 });

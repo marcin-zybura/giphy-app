@@ -18,13 +18,15 @@
       <form id="giphy-form">
         <div class="form-group">
           <label for="exampleInputEmail1">Find your .gif</label>
-          <input type="text" class="form-control" id="gifInput" aria-describedby="gifInput" placeholder="Search...">
+          <input type="text" class="form-control" id="gifInput" aria-describedby="gifInput" placeholder="Search..." autocomplete="off">
           <small id="gifHelp" class="form-text text-muted">Type to search</small>
         </div>
       </form>
     </div>
-    <div class="container gifs-container">
-      <div id="loader" class="loader hidden"></div>
+    <div id="gifs-container" class="container gifs-container">
+      <div class="loader-container">
+        <div id="loader" class="loader hidden"></div>
+      </div>
     </div>
     <script src="main.js"></script>
   </body>
