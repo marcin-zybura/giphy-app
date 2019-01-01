@@ -1,7 +1,7 @@
 # Giphy-app
 
 Technologies used:</br>
-JavaScript, HTML, CSS, Gulp, Sass
+JavaScript, HTML, CSS, Gulp, Sass, Bootstrap
 
 Search for gif pictures.
 
